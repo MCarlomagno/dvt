@@ -1,4 +1,5 @@
- #[derive(Debug)]
+
+#[derive(Debug)]
 pub enum AggregationError {
   InvalidSignature,
   // Other error variants as needed
