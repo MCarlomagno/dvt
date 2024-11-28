@@ -4,6 +4,7 @@
 3. distribute shares using distributed key generation ceremony (DKG).
 3. A new message arrives and colaborators sign the message uing shares
 4. When a new signature is added, the resulting signature is verified against public key
+5. Once the resulting signature is valid (correctly verified) the message get's succesfully signed.
 
 ## TSS for ECDSA (Ethereum-Compatible)
 ### Key Generation:
