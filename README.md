@@ -1,6 +1,6 @@
 ## [WIP] Distributed Validator Technology for Ethereum
 
-1. [WIP] Inception: DKG mechanism using FROST mechanism.
+1. [WIP] Inception: DKG using FROST mechanism.
 
 2. [TODO] A new message arrives and colaborators sign the message using shares.
 
