@@ -1,10 +1,10 @@
-## Algorithm
-1. generate shares
-2. derive public key using shares
-3. distribute shares using distributed key generation ceremony (DKG).
-3. A new message arrives and colaborators sign the message uing shares
-4. When a new signature is added, the resulting signature is verified against public key
-5. Once the resulting signature is valid (correctly verified) the message get's succesfully signed.
+## [WIP] Distributed Validator Technology for Ethereum
+
+1. [WIP] Inception: DKG mechanism using FROST mechanism.
+
+2. [TODO] A new message arrives and colaborators sign the message using shares.
+
+3. [TODO] Once the resulting signature is valid (verified against public key) the message is broadcasted.
 
 ## TSS for ECDSA (Ethereum-Compatible)
 ### Key Generation:

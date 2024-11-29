@@ -1,4 +1,3 @@
-
 #[derive(Debug)]
 pub enum AggregationError {
   InvalidSignature,
@@ -26,6 +25,8 @@ pub struct SignatureAggregator {
 
 impl SignatureAggregator {
   pub fn new() -> Self {
+
+      // TODO: implement DKG
       Self { signatures: Vec::new() }
   }
 
