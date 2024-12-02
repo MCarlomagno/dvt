@@ -26,7 +26,7 @@ pub struct SignatureAggregator {
 impl SignatureAggregator {
   pub fn new() -> Self {
 
-      // TODO: implement DKG
+      // TODO: import + init dkg
       Self { signatures: Vec::new() }
   }
 

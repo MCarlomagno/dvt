@@ -1,11 +1,5 @@
 ## [WIP] Distributed Validator Technology for Ethereum
 
-1. [WIP] Inception: DKG using FROST mechanism.
-
-2. [TODO] A new message arrives and colaborators sign the message using shares.
-
-3. [TODO] Once the resulting signature is valid (verified against public key) the message is broadcasted.
-
 ## TSS for ECDSA (Ethereum-Compatible)
 ### Key Generation:
 - The private key is split into shares, one for each participant.
