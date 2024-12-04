@@ -17,13 +17,8 @@ pub struct Share {
   pub value: Scalar,
 }
 
-impl std::fmt::Display for Share {
-  fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-      write!(f, "Share(gen: {}, owner: {}, value: {:?})", 
-          self.gen_index, self.index, self.value)
-  }
-}
 
+#[derive(Debug)]
 pub struct KeyPair {
   pub index: u8,
   pub secret: Scalar,
@@ -44,8 +39,8 @@ impl AggregatedSignature {
 }
 
 pub struct Aggregator {
-  commitments: Vec<RistrettoPoint>,
-  keypairs: Vec<KeyPair>,
+  pub commitments: Vec<RistrettoPoint>,
+  pub keypairs: Vec<KeyPair>,
   pub shares: Vec<Share>,
 }
 
@@ -88,7 +83,7 @@ impl Aggregator {
       Ok(AggregatedSignature::new())
   }
 
-  fn validate_share(share: &Share) -> bool {
+  fn validate_share(_share: &Share) -> bool {
     // Implement validation logic
     return true;
   }
