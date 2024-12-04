@@ -1,6 +1,9 @@
 ## [WIP] Distributed Validator Technology for Ethereum
 
-## TSS for ECDSA (Ethereum-Compatible)
+Simplified implementation of the Distributed Validator Technology for re-constructing private key signatures in a decentralized manner and without compromising the key.
+
+See more: https://ethereum.org/en/staking/dvt/
+
 ### Key Generation:
 - The private key is split into shares, one for each participant.
 - Each participant holds a private share, and the private key is mathematically represented as the sum of these shares weighted by Lagrange coefficients.
