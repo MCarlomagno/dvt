@@ -3,6 +3,7 @@ use crate::dkg::{generate_shares, create_random_scalar};
 use curve25519_dalek::scalar::Scalar;
 use curve25519_dalek::ristretto::RistrettoPoint;
 use curve25519_dalek::constants::RISTRETTO_BASEPOINT_TABLE;
+use curve25519_dalek::traits::Identity;
 
 #[derive(Debug)]
 pub enum AggregationError {
@@ -42,6 +43,7 @@ pub struct Aggregator {
   pub commitments: Vec<RistrettoPoint>,
   pub keypairs: Vec<KeyPair>,
   pub shares: Vec<Share>,
+  pub threshold: u8,
 }
 
 impl Aggregator {
@@ -66,16 +68,7 @@ impl Aggregator {
             index: share.index,
         }).collect();
 
-      Self { keypairs, commitments, shares }
-  }
-
-  pub fn sign(&mut self, share: Share) -> Result<(), AggregationError> {
-      if Self::validate_share(&share) {
-          self.shares.push(share);
-          Ok(())
-      } else {
-          Err(AggregationError::InvalidShare)
-      }
+      Self { keypairs, commitments, shares, threshold }
   }
 
   pub fn aggregate(&self) -> Result<AggregatedSignature, AggregationError> {
@@ -83,8 +76,28 @@ impl Aggregator {
       Ok(AggregatedSignature::new())
   }
 
-  fn validate_share(_share: &Share) -> bool {
-    // Implement validation logic
-    return true;
+
+  pub fn validate_share(&self, share: &Share) -> Result<(),&str> {
+    let term = Scalar::from(share.index);
+    let f_result = RISTRETTO_BASEPOINT_TABLE * &share.value;
+    let mut result = RistrettoPoint::identity();
+
+    if self.commitments.len() != self.threshold as usize {
+        return Err("Missing commitments");
+    }
+
+    for (i, comm_i) in self.commitments.iter().rev().enumerate() {
+        result += comm_i;
+
+        if i != self.commitments.len() - 1 {
+            result *= term;
+        }
+    }
+
+    if !(f_result == result) {
+        return Err("Invalid share");
+    }
+
+    Ok(())
   }
 }
