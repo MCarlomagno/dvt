@@ -1,6 +1,6 @@
-## [WIP] Distributed Validator Technology for Ethereum
+## Distributed Validator Technology for Ethereum
 
-Simplified implementation of the Distributed Validator Technology for re-constructing private key signatures in a decentralized manner and without compromising the key.
+Simplified implementation of the Distributed Validator Technology for re-constructing private key signatures in a decentralized manner and without compromising the main key.
 
 See more: https://ethereum.org/en/staking/dvt/
 
