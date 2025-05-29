@@ -4,6 +4,8 @@ use curve25519_dalek::scalar::Scalar;
 use curve25519_dalek::ristretto::RistrettoPoint;
 use curve25519_dalek::constants::RISTRETTO_BASEPOINT_TABLE;
 use curve25519_dalek::traits::Identity;
+use sha2::{Digest, Sha512};
+
 
 #[derive(Debug)]
 pub enum AggregationError {
@@ -27,16 +29,15 @@ pub struct KeyPair {
   pub group_public: RistrettoPoint,
 }
 
-
 pub struct AggregatedSignature {
-  // TODO: implement aggregated signature
+  pub r: RistrettoPoint,
+  pub s: Scalar,
 }
 
 impl AggregatedSignature {
-  // TODO: implement aggregated signature
-  pub fn new() -> Self {
-    Self { }
-}
+  pub fn new(r: RistrettoPoint, s: Scalar) -> Self {
+      Self { r, s }
+  }
 }
 
 pub struct Aggregator {
@@ -71,9 +72,39 @@ impl Aggregator {
       Self { keypairs, commitments, shares, threshold }
   }
 
-  pub fn aggregate(&self) -> Result<AggregatedSignature, AggregationError> {
-      // Logic to combine signatures into one aggregated signature
-      Ok(AggregatedSignature::new())
+  pub fn aggregate(&self, message: &[u8]) -> Result<AggregatedSignature, AggregationError> {
+    let mut nonces: Vec<Scalar> = vec![];
+    let mut r_points: Vec<RistrettoPoint> = vec![];
+
+    // Step 1: Each signer generates a nonce and computes R_i = G * r_i
+    for _ in 0..self.threshold {
+        let r_i = create_random_scalar();
+        let R_i = RISTRETTO_BASEPOINT_TABLE * &r_i;
+        nonces.push(r_i);
+        r_points.push(R_i);
+    }
+
+    // Step 2: Aggregate commitments
+    let R = r_points.iter().fold(RistrettoPoint::identity(), |acc, x| acc + x);
+
+    // Step 3: Compute challenge c = H(R || group_public || message)
+    let mut hasher = Sha512::default();
+    hasher.update(R.compress().as_bytes());
+    hasher.update(self.keypairs[0].group_public.compress().as_bytes());
+    hasher.update(message);
+    let hash_result = hasher.finalize(); // 64 bytes from SHA-512
+    let c = Scalar::from_bytes_mod_order(hash_result[..32].try_into().unwrap());
+
+    // Step 4: Each signer computes s_i = r_i + c * share.value
+    let s_i: Vec<Scalar> = nonces.iter().zip(&self.shares)
+        .map(|(r_i, share)| r_i + c * share.value)
+        .collect();
+
+    // Step 5: Aggregate responses: s = Σ s_i
+    let s = s_i.iter().fold(Scalar::ZERO, |acc, x| acc + x);
+
+    // Step 6: Return final aggregated signature
+    Ok(AggregatedSignature::new(R, s))
   }
 
 

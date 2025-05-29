@@ -18,13 +18,12 @@ fn main() {
       }
    }
 
-   let res = agg.aggregate();
+   let res = agg.aggregate("test".as_bytes());
 
    match res {
-    Ok(_) => {
-        println!("shares {:?}", agg.shares);
-        println!("keys {:?}", agg.keypairs);
-        println!("commitments {:?}", agg.commitments);
+    Ok(signature) => {
+        println!("signature R {:?}", signature.r);
+        println!("signature S {:?}", signature.s);
         println!("Executed successfully ✅");
     },
     Err(err) => {
