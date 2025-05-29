@@ -6,7 +6,6 @@ use curve25519_dalek::constants::RISTRETTO_BASEPOINT_TABLE;
 use curve25519_dalek::traits::Identity;
 use sha2::{Digest, Sha512};
 
-
 #[derive(Debug)]
 pub enum AggregationError {
   InvalidShare,

@@ -5,10 +5,6 @@ use curve25519_dalek::constants::RISTRETTO_BASEPOINT_TABLE;
 use curve25519_dalek::scalar::Scalar;
 use curve25519_dalek::ristretto::RistrettoPoint;
 
-/**
- * TODO: Implement key distribution ceremony
- */
-
 pub fn create_random_scalar() -> Scalar {
   let mut bytes: [u8; 32] = [0u8; 32];
   thread_rng().fill_bytes(&mut bytes);

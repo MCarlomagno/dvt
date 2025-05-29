@@ -4,7 +4,11 @@
 
 Simplified implementation of the Distributed Validator Technology for re-constructing private key signatures in a decentralized manner and without compromising the main key.
 
+Using FROST (Fast Randomized On-Chain Signing Technology) for signature aggregation and curve25519 for key generation.
+
 See more: https://ethereum.org/en/staking/dvt/
+
+## Overview
 
 ### Key Generation:
 - The private key is split into shares, one for each participant.

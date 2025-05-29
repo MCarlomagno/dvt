@@ -4,7 +4,6 @@ pub mod dkg;
 use crate::aggregator::Aggregator;
 
 fn main() {
-    // TODO: implement entrypoint.
    let agg = Aggregator::new(3, 2);
 
    for share in &agg.shares {
