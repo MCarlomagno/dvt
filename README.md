@@ -22,5 +22,5 @@ See more: https://ethereum.org/en/staking/dvt/
 - The contributions from all participants are combined using Lagrange interpolation to produce the final signing component.
 
 ### Final Signature:
-- The final signature is indistinguishable from one produced by a standard ECDSA process.
+- The final signature is indistinguishable from one produced by a standard EDDSA process.
 - It can be verified using the shared public key and is compatible with Ethereum's transaction verification mechanisms.
